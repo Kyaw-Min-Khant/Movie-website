@@ -1,0 +1,41 @@
+{
+  "name": "cinema-api",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@mantine/core": "^6.0.5",
+    "@mantine/hooks": "^6.0.5",
+    "@material-tailwind/react": "^1.4.2",
+    "@reduxjs/toolkit": "^1.9.3",
+    "@sweetalert2/theme-dark": "^5.0.15",
+    "animate.css": "^4.1.1",
+    "chart.js": "^4.2.1",
+    "daisyui": "^2.51.5",
+    "js-cookie": "^3.0.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.8.0",
+    "react-iframe": "^1.8.5",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.10.0",
+    "react-youtube": "^10.1.0",
+    "sweetalert2": "^11.7.3",
+    "swiper": "^9.2.0",
+    "tailwindcss": "^3.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@vitejs/plugin-react": "^3.1.0",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.21",
+    "vite": "^4.2.0"
+  }
+}

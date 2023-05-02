@@ -1,0 +1,7 @@
+.swal2-container.swal2-center>.swal2-popup {
+  background-color: #1C1C1E;
+}
+.swal2-popup.swal2-toast.swal2-show{
+   background-color: #1C1C1E;  
+   color: red;
+}
