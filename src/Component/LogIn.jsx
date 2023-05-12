@@ -10,10 +10,11 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
-import { useLoginMutation } from "../Services/myapi";
 import { useDispatch } from "react-redux";
-import { addUser } from "../features.jsx/MoviesSlice";
 import { NavLink, useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../config/Firebase-config";
+import { addUser } from "../features.jsx/MoviesSlice";
 const LogIn = () => {
   const Toast = Swal.mixin({
     toast: true,
@@ -29,16 +30,20 @@ const LogIn = () => {
   const dispatch = useDispatch(addUser);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [login] = useLoginMutation();
   const navigate = useNavigate();
   const formHandler = async (e) => {
     try {
       e.preventDefault();
-      const user = { email, password };
-      e.preventDefault();
-      const { data } = await login(user);
-      if (data?.success) {
-        dispatch(addUser({ user: data?.user, token: data?.token }));
+      await signInWithEmailAndPassword(auth, email, password);
+      console.log(auth?.currentUser?.accessToken);
+      console.log(auth?.currentUser);
+      if (auth?.currentUser?.accessToken) {
+        dispatch(
+          addUser({
+            user: auth?.currentUser?.email,
+            token: auth?.currentUser?.accessToken,
+          })
+        );
         navigate("/");
         Toast.fire({
           title: "Signed in successfully",

@@ -2,6 +2,8 @@ import React from "react";
 import { Card, Image, Text } from "@mantine/core";
 import { BsStarFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import Undraw from "./undraw.png";
+
 const SeriesCard = ({ id, title, name, backdrop_path, vote_average }) => {
   const navigate = useNavigate();
   return (
@@ -14,16 +16,26 @@ const SeriesCard = ({ id, title, name, backdrop_path, vote_average }) => {
         style={{ width: "180px" }}
       >
         <Card.Section>
-          <Image
-            src={
-              "https://image.tmdb.org/t/p/original" + backdrop_path ||
-              poster_path
-            }
-            height={200}
-            width={180}
-            className="object-contain mx-auto"
-            alt={title}
-          />
+          {backdrop_path == null ? (
+            <Image
+              src={Undraw}
+              height={200}
+              width={180}
+              className="object-contain mx-auto"
+              alt={title}
+            />
+          ) : (
+            <Image
+              src={
+                "https://image.tmdb.org/t/p/original" + backdrop_path ||
+                poster_path
+              }
+              height={200}
+              width={180}
+              className="object-contain mx-auto"
+              alt={title}
+            />
+          )}
         </Card.Section>
 
         <Text

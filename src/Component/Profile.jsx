@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { removeUser } from "../features.jsx/MoviesSlice";
 import Swal from "sweetalert2";
 import Menu from "./Menu";
+import { signOut } from "firebase/auth";
+import { auth } from "../config/Firebase-config";
 
 const Profile = () => {
   const Toast = Swal.mixin({
@@ -28,13 +30,17 @@ const Profile = () => {
   const formHandler = async (e) => {
     const token = Cookies.get("token");
     e.preventDefault();
-    const data = await logout(token);
-    if (data.data.success) {
-      Toast.fire({
-        title: "Logout successfully",
-      });
-      dispatch(removeUser());
-      navigate("/");
+    try {
+      await signOut(auth);
+      if (auth?.currentUser?.email == null) {
+        Toast.fire({
+          title: "Logout successfully",
+        });
+        dispatch(removeUser());
+        navigate("/");
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
   return (
@@ -53,11 +59,8 @@ const Profile = () => {
               src="https://unsplash.com/photos/OBufvGMaBaQ"
             />
             <div className="mx-auto ">
-              <h2 className="text-white text-4xl font-sans  text-center">
-                {user?.name}
-              </h2>
               <h2 className="text-white text-xl py-3 font-sans text-center">
-                {user?.email}
+                {user}
               </h2>
             </div>
             <button

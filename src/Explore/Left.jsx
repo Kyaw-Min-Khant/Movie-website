@@ -41,7 +41,7 @@ const Left = () => {
           </h2>
         </div>
         <NavLink to="/profile">
-          <h2 className="text-2xl text-white pl-5 red">
+          <h2 className="text-2xl text-white pl-4 red">
             <CgProfile />
           </h2>
         </NavLink>

@@ -1,16 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Image, Text } from "@mantine/core";
-import {BsStarFill} from "react-icons/bs"
+import { BsStarFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import Undraw from "./undraw.png";
 import "animate.css";
-const MovieCard = ({
-  id,
-  title,
-  name,
-  backdrop_path,
-  vote_average,
-}) => {
-  const navigate=useNavigate();
+const MovieCard = ({ id, title, name, backdrop_path, vote_average }) => {
+  const navigate = useNavigate();
   return (
     <div onClick={() => navigate(`/detail/${id}`, { state: { id } })}>
       <Card
@@ -21,16 +16,26 @@ const MovieCard = ({
         style={{ width: "180px" }}
       >
         <Card.Section>
-          <Image
-            src={
-              "https://image.tmdb.org/t/p/original" + backdrop_path ||
-              poster_path
-            }
-            height={200}
-            width={180}
-            className="object-contain mx-auto"
-            alt={title}
-          />
+          {backdrop_path == null ? (
+            <Image
+              src={Undraw}
+              height={200}
+              width={180}
+              className="object-contain mx-auto"
+              alt={title}
+            />
+          ) : (
+            <Image
+              src={
+                "https://image.tmdb.org/t/p/original" + backdrop_path ||
+                poster_path
+              }
+              height={200}
+              width={180}
+              className="object-contain mx-auto"
+              alt={title}
+            />
+          )}
         </Card.Section>
 
         <Text

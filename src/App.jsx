@@ -8,6 +8,7 @@ import SignUp from "./Component/SignUp";
 import LogIn from "./Component/LogIn";
 import RouteGuard from "./Component/RouteGuard";
 import Profile from "./Component/Profile";
+import FormRouteGuard from "./Component/FormRouteGuard";
 const LazyExploreList = React.lazy(() => import("./Explore/ExploreList"));
 const LazyHome = React.lazy(() => import("./Component/HomePage"));
 
@@ -48,8 +49,22 @@ const App = () => {
             </RouteGuard>
           }
         />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<LogIn />} />
+        <Route
+          path="/signup"
+          element={
+            <FormRouteGuard>
+              <SignUp />
+            </FormRouteGuard>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <FormRouteGuard>
+              <LogIn />
+            </FormRouteGuard>
+          }
+        />
         <Route
           path="/profile"
           element={

@@ -36,7 +36,7 @@ const RightSide = () => {
           </div>
           <div className="p-3 mb-2 font-semibold">
             <h2 className=" text-white text-xl">Trending</h2>
-            <div className=" h-screen overflow-scroll">
+            <div className="h-screen pb-[100px] overflow-scroll">
               {popular?.map((item) => (
                 <SimilarCard key={item.id} {...item} />
               ))}

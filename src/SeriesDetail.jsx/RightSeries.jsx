@@ -38,11 +38,11 @@ const RightSeries = () => {
           <h2 className="text-xl p-2 text-white font-serif font-semibold">
             Similar
           </h2>
-          <div className="overflow-scroll overflow-x-hidden flex flex-col gap-y-1 lg:h-screen md:w-[400px] h-[300px]">
+          <div className="overflow-scroll  flex flex-col gap-y-1 lg:h-[1000px] md:w-[400px] h-[300px]">
             {movie?.map((item) => (
               <RightSimilarCard key={item.id} {...item} />
             ))}
-            <div className="mx-auto">
+            <div className="lg:ms-[100px] mx-auto">
               {movie < 0 ? (
                 <div className="">
                   <TbDatabaseOff className="mt-5 text-2xl mx-auto text-[#BFCCB5] " />

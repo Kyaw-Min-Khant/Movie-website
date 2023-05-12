@@ -1,11 +1,10 @@
-import React from 'react'
-import {RiMovie2Line} from "react-icons/ri"
-import { NavLink } from 'react-router-dom';
+import React from "react";
+import { RiMovie2Line } from "react-icons/ri";
+import { NavLink } from "react-router-dom";
 import { AiFillHome } from "react-icons/ai";
 import { MdExplore } from "react-icons/md";
 import { AiOutlineSearch } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
-import "./menu.css"
 const Menu = () => {
   return (
     <div className="md:hidden sm:block fixed top-[0px] right-[5px] z-[2000]">
@@ -20,24 +19,23 @@ const Menu = () => {
           tabIndex={0}
           className="dropdown-content menu shadow  m-0  rounded py-2 bg-[#1C1C1E]"
         >
-
           <div className="px-3">
             <li>
-              <NavLink  to="/">
+              <NavLink to="/">
                 <h2 className=" text-lg text-white red">
                   <AiFillHome />
                 </h2>
               </NavLink>
             </li>
             <li>
-              <NavLink  to="/ExploreList">
+              <NavLink to="/ExploreList">
                 <h2 className=" text-lg text-white red">
                   <MdExplore />
                 </h2>
               </NavLink>
             </li>
             <li>
-              <NavLink  to="/search">
+              <NavLink to="/search">
                 <h2 className=" text-lg text-white red">
                   <AiOutlineSearch />
                 </h2>
@@ -45,7 +43,7 @@ const Menu = () => {
             </li>
           </div>
           <li>
-            <NavLink  to="/profile">
+            <NavLink to="/profile">
               <h2 className="text-2xl text-white mx-auto block red">
                 <CgProfile />
               </h2>
@@ -55,6 +53,6 @@ const Menu = () => {
       </div>
     </div>
   );
-}
+};
 
-export default Menu
+export default Menu;

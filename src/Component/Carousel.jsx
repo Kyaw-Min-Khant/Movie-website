@@ -1,32 +1,39 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import { Pagination, Navigation,Autoplay } from "swiper";
-import "./carousel.css"
-import Slide from './Slide';
+import { Pagination, Navigation, Autoplay } from "swiper";
+import "./carousel.css";
+import LazyLoading from "./LazyLoading";
+import Slide from "./Slide";
 const Carousel = () => {
-        const [movies, setMovies] = useState([]);
-        useEffect(() => {
-          run();
-        }, []);
-        const run = async () => {
-          const fetchData = await fetch(
-            "https://api.themoviedb.org/3/trending/all/week?api_key=a6af80b02b99c9fae32ba3c9259d4844"
-          );
-          const { results } = await fetchData.json();
-          setMovies(results);
-        };
+  const [movies, setMovies] = useState([]);
+  const [load, setLoad] = useState(true);
+  useEffect(() => {
+    run();
+  }, []);
+  const run = async () => {
+    setLoad(true);
+    const fetchData = await fetch(
+      "https://api.themoviedb.org/3/trending/all/week?api_key=a6af80b02b99c9fae32ba3c9259d4844"
+    );
+    const { results } = await fetchData.json();
+    setMovies(results);
+    setLoad(false);
+  };
+  if (load) {
+    return <LazyLoading />;
+  }
   return (
-    <div className=''>
+    <div className="">
       <>
         <Swiper
           modules={[Autoplay, Pagination, Navigation]}
           pagination={{ clickable: true }}
           slidesPerView={1}
           navigation={true}
-          style={{color:"red"}}
+          style={{ color: "red" }}
           autoplay={{
             delay: 5000,
             pauseOnMouseEnter: true,
@@ -44,6 +51,6 @@ const Carousel = () => {
       </>
     </div>
   );
-}
+};
 
-export default Carousel
+export default Carousel;

@@ -18,6 +18,8 @@
     "animate.css": "^4.1.1",
     "chart.js": "^4.2.1",
     "daisyui": "^2.51.5",
+    "firebase": "^9.21.0",
+    "firebase-tools": "^11.30.0",
     "js-cookie": "^3.0.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

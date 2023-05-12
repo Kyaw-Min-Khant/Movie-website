@@ -2,21 +2,25 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Container from "./Container";
 import Menu from "../Component/Menu";
+import LazyLoading from "../Component/LazyLoading";
 const Center = () => {
   const [text, setText] = useState([]);
   const [video, setVideo] = useState([]);
   const location = useLocation();
   const detailId = location?.state?.id;
   const [review, setReview] = useState([]);
+  const [load, setLoad] = useState(true);
   useEffect(() => {
     apiFetch(), movieFetch(), reviewFetch();
   }, [detailId]);
   const apiFetch = async () => {
+    setLoad(true);
     const data = await fetch(
       `https://api.themoviedb.org/3/movie/${detailId}?api_key=a6af80b02b99c9fae32ba3c9259d4844&language=en-US`
     );
     const detailFetch = await data.json();
     setText(detailFetch);
+    setLoad(false);
   };
   const movieFetch = async () => {
     const data = await fetch(
@@ -37,9 +41,12 @@ const Center = () => {
   const clip = video?.find((item) => item.type === "Behind the Scenes");
   const generateUrl = `https://www.youtube.com/embed/${trailer?.key}`;
   const clipUrl = `https://www.youtube.com/embed/${clip?.key}`;
+  if (load) {
+    return <LazyLoading />;
+  }
   return (
     <div className=" overflow-hidden">
-      <Menu/>
+      <Menu />
       <Container
         {...text}
         clipUrl={clipUrl}

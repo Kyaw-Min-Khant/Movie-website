@@ -1,9 +1,14 @@
 import React, { useState } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import Film from "../video/OldFilm.mp4";
 import "./video.css";
 import { NavLink } from "react-router-dom";
+import { auth } from "../config/Firebase-config";
+import GoogleProvider from "./GoogleProvider";
 import { Loader } from "@mantine/core";
-import "./swiper.css"
+
+import "./swiper.css";
+
 import {
   Card,
   Input,
@@ -11,22 +16,20 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
-import { useRegisterMutation } from "../Services/myapi";
 import { useNavigate } from "react-router-dom";
 import LazyLoading from "./LazyLoading";
 const SignUp = () => {
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [password_confirmation, setPasswordConfirmation] = useState("");
-  const [register, isLoading] = useRegisterMutation();
   const navigate = useNavigate();
   const run = async (e) => {
     try {
       e.preventDefault();
-      const user = { name, email, password, password_confirmation };
-      const { data } = await register(user);
-      if (data?.success) navigate(`/login`);
+      await createUserWithEmailAndPassword(auth, email, password);
+      console.log(auth);
+      if (auth?.currentUser?.accessToken) {
+        return navigate("/login");
+      }
     } catch (e) {
       console.log(e);
     }
@@ -37,7 +40,7 @@ const SignUp = () => {
   //   )
   // };
   return (
-    <div className="bg-video bg-black h-screen w-full justify-center flex items-center overflow-hidden">
+    <div className="bg-video bg-black h-screen w-full flex-col justify-center flex items-center overflow-hidden">
       <video autoPlay loop className="h-screen" muted>
         <source src={Film} type="video/mp4" />
       </video>
@@ -55,13 +58,6 @@ const SignUp = () => {
         <form onSubmit={run} className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
           <div className="mb-4 flex flex-col gap-4">
             <Input
-              onChange={(e) => setName(e.target.value)}
-              className="text-white"
-              size="lg"
-              label="Name"
-              value={name}
-            />
-            <Input
               onChange={(e) => setEmail(e.target.value)}
               className="text-white"
               size="lg"
@@ -76,45 +72,9 @@ const SignUp = () => {
               label="Password"
               value={password}
             />
-            <Input
-              onChange={(e) => setPasswordConfirmation(e.target.value)}
-              className=""
-              type="password"
-              size="lg"
-              label="Confirm password"
-              value={password_confirmation}
-            />
           </div>
-          <Checkbox
-            className=""
-            label={
-              <Typography
-                variant="small"
-                color="white"
-                className="flex items-center font-normal"
-              >
-                I agree the
-                <a
-                  href="#"
-                  className="font-medium transition-colors  hover:text-blue-500"
-                >
-                  &nbsp;Terms and Conditions
-                </a>
-              </Typography>
-            }
-            containerProps={{ className: "-ml-2.5" }}
-          />
           <Button className="mt-6" type="submit" fullWidth>
-            {isLoading ? (
-              <p> Register</p>
-            ) : (
-              <Loader
-                className="mx-auto block"
-                color="red"
-                size="sm"
-                variant="dots"
-              />
-            )}
+            <p> Register</p>
           </Button>
           <Typography color="white" className="mt-4 text-center font-normal">
             Already have an account?
@@ -127,6 +87,7 @@ const SignUp = () => {
             </NavLink>
           </Typography>
         </form>
+        <GoogleProvider />
       </Card>
     </div>
   );
