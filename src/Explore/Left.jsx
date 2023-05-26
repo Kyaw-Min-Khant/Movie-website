@@ -33,12 +33,6 @@ const Left = () => {
               <AiOutlineSearch />
             </h2>
           </NavLink>
-          <h2 className=" text-xl text-white py-3 px-1 red">
-            <BsFillBookmarkPlusFill />
-          </h2>
-          <h2 className=" text-xl text-white py-3 px-1 red">
-            <FaHistory />
-          </h2>
         </div>
         <NavLink to="/profile">
           <h2 className="text-2xl text-white pl-4 red">

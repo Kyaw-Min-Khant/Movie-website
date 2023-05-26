@@ -47,7 +47,7 @@ const Carousel = (props) => {
       label: "YouTube",
       value: "youtube",
       desc: (
-        <div className="lg:w-[600px] md:w-[500px] w-[300px]">
+        <div className="lg:w-[600px]">
           <div className="flex justify-start">
             <h2
               onClick={() => setHide(true)}
@@ -70,7 +70,7 @@ const Carousel = (props) => {
               Behind the Scenes
             </h2>
           </div>
-          <div className=" px-0 lg:w-[600px] md:w-[500px] w-[300px]">
+          <div className=" px-0 lg:w-[600px]">
             {hide ? (
               <Youtube generateUrl={generateUrl} />
             ) : (
@@ -82,7 +82,7 @@ const Carousel = (props) => {
     },
   ];
   return (
-    <div className="lg:w-[600px] md:w-[500px] w-[300px] min-h-[400px] pt-5 px-1 md:px-3">
+    <div className="lg:w-[600px] min-h-[400px] pt-5 px-1 md:px-3">
       <Tabs value="overview" className="">
         <TabsHeader>
           {data?.map(({ label, value }) => (

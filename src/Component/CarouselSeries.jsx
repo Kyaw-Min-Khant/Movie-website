@@ -6,24 +6,13 @@ import "swiper/css/navigation";
 import { Pagination, Navigation, Autoplay } from "swiper";
 import Slide from "./Slide";
 import LazyLoading from "./LazyLoading";
+import { useCarouselSeriesQuery } from "../Services/myapi";
 
 const CarouselSeries = () => {
-  const [series, setSeries] = useState([]);
-  const [load, setLoad] = useState(true);
-  useEffect(() => {
-    run();
-  }, []);
-  const run = async () => {
-    setLoad(true);
-    const fetchData = await fetch(
-      "https://api.themoviedb.org/3/tv/top_rated?api_key=a6af80b02b99c9fae32ba3c9259d4844&language=en-US&page=2"
-    );
-    const { results } = await fetchData.json();
-    setSeries(results);
-    setLoad(false);
-  };
-  if (load) {
-    return <LazyLoading />;
+  const { data: ApiData, isLoading } = useCarouselSeriesQuery();
+  const series = ApiData?.results;
+  if (isLoading) {
+    <LazyLoading />;
   }
   return (
     <div>
@@ -42,7 +31,7 @@ const CarouselSeries = () => {
             loop
             className="swiper-container"
           >
-            {series.map((movie) => (
+            {series?.map((movie) => (
               <SwiperSlide key={movie.id}>
                 <Slide {...movie} />
               </SwiperSlide>

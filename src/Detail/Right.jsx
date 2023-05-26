@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import SimilarCard from "./SimilarCard";
 import { TbDatabaseOff } from "react-icons/tb";
 const Right = () => {
+  const inputRef = useRef();
   const nav = useNavigate();
   const location = useLocation();
   const similarId = location?.state?.id;
   const [movie, setMovie] = useState([]);
-  const [inputMovie, setInputMovie] = useState();
   const similarFetch = async () => {
     const apiFetch = await fetch(
       `https://api.themoviedb.org/3/movie/${similarId}/similar?api_key=a6af80b02b99c9fae32ba3c9259d4844&language=en-US&page=1`
@@ -19,17 +19,18 @@ const Right = () => {
     similarFetch();
   }, [similarId]);
   const run = (e) => {
+    const Data=inputRef.current.value
     e.preventDefault();
-    nav("/search", { state: { inputMovie } });
+    nav("/search", { state: { Data } });
   };
+  const films = movie?.map((item) => <SimilarCard key={item.id} {...item} />);
   return (
     <div className="">
       <div className="lg:w-[280px] lg:pl-0 md:pl-[70px] pl-0 w-[400px]">
         <form onSubmit={run} className="py-3 px-2">
           <input
+            ref={inputRef}
             placeholder="Search..."
-            value={inputMovie}
-            onChange={(e) => setInputMovie(e.target.value)}
             type="text"
             className="input input-bordered bg-[#343333]  text-white font-mono input-sm w-full max-w-xs"
           />
@@ -39,9 +40,7 @@ const Right = () => {
             Similar
           </h2>
           <div className="overflow-scroll flex flex-col gap-y-1 lg:h-[1000px] md:w-[400px] h-[300px]">
-            {movie?.map((item) => (
-              <SimilarCard key={item.id} {...item} />
-            ))}
+            {films}
             <div className="lg:ms-[100px] mx-auto">
               {movie?.length === 0 ? (
                 <div className="">

@@ -1,94 +1,156 @@
 import React, { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import Film from "../video/OldFilm.mp4";
 import "./video.css";
 import { NavLink } from "react-router-dom";
-import { auth } from "../config/Firebase-config";
-import GoogleProvider from "./GoogleProvider";
-import { Loader } from "@mantine/core";
-
+import { auth, db } from "../config/Firebase-config";
 import "./swiper.css";
-
-import {
-  Card,
-  Input,
-  Checkbox,
-  Button,
-  Typography,
-} from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
-import LazyLoading from "./LazyLoading";
+import { addDoc, collection, doc } from "firebase/firestore";
+import {
+  Box,
+  Button,
+  Group,
+  Loader,
+  NumberInput,
+  PasswordInput,
+  TextInput,
+} from "@mantine/core";
+import { useForm } from "@mantine/form";
+import { async } from "@firebase/util";
 const SignUp = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [load, setLoad] = useState(true);
+  const form = useForm({
+    initialValues: {
+      name: "",
+      email: "",
+      address: "",
+      phoneNumber: "",
+      password: "",
+    },
+
+    validate: {
+      name: (value) =>
+        value.length > 2 ? null : "Name must be at least 2 characters",
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
+      address: (value) =>
+        value.length > 2 ? null : "Address must be at least 2 characters",
+      password: (value) =>
+        value.length >= 8 ? null : "Password must be at least 8 characters",
+      passwordConfirmation: (value) =>
+        value.length >= 8 ? null : "Password must be at least 8 characters",
+    },
+  });
   const navigate = useNavigate();
-  const run = async (e) => {
-    try {
-      e.preventDefault();
-      await createUserWithEmailAndPassword(auth, email, password);
-      console.log(auth);
-      if (auth?.currentUser?.accessToken) {
-        return navigate("/login");
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  // if(isLoading){
-  //   return(
-  //     <LazyLoading/>
-  //   )
-  // };
+
   return (
     <div className="bg-video bg-black h-screen w-full flex-col justify-center flex items-center overflow-hidden">
       <video autoPlay loop className="h-screen" muted>
         <source src={Film} type="video/mp4" />
       </video>
-      <Card
-        className="absolute backdrop-blur p-6"
-        color="transparent"
-        shadow={false}
-      >
-        <Typography variant="h4" color="white">
-          Sign Up
-        </Typography>
-        <Typography color="white" className="mt-1 font-normal">
-          Enter your details to register.
-        </Typography>
-        <form onSubmit={run} className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
-          <div className="mb-4 flex flex-col gap-4">
-            <Input
-              onChange={(e) => setEmail(e.target.value)}
-              className="text-white"
-              size="lg"
-              label="Email"
-              value={email}
-            />
-            <Input
-              onChange={(e) => setPassword(e.target.value)}
-              className="text-white"
-              type="password"
-              size="lg"
-              label="Password"
-              value={password}
-            />
-          </div>
-          <Button className="mt-6" type="submit" fullWidth>
-            <p> Register</p>
-          </Button>
-          <Typography color="white" className="mt-4 text-center font-normal">
-            Already have an account?
-            <NavLink
-              to="/login"
-              href="#"
-              className="font-medium text-blue-500 transition-colors hover:text-blue-700"
-            >
-              Login
-            </NavLink>
-          </Typography>
+      <Box className="absolute px-6 py-2 bg-[#8c8a8a96]" mx="auto">
+        <h2 className="text-lg mx-auto text-white font-bold">Create Account</h2>
+        <form
+          onSubmit={form.onSubmit(async (values) => {
+            if (values.password == values.passwordConfirmation) {
+              setLoad(false);
+              window.alert(
+                "First,Copy img url from your browser for your profile picture"
+              );
+              const photo = window.prompt("Enter Your Image Url");
+              try {
+                const { user } = await createUserWithEmailAndPassword(
+                  auth,
+                  values.email,
+                  values.password
+                );
+                await updateProfile(user, {
+                  displayName: values?.name,
+                  photoURL: photo,
+                }).then(async () => {
+                  const UserData = collection(db, "users");
+                  const UserAdd = await addDoc(UserData, {
+                    name: values.name,
+                    email: values.email,
+                    password: values.password,
+                    address: values.address,
+                    phoneNumber: values.phoneNumber,
+                  });
+                });
+                setLoad(true);
+                if (auth?.currentUser?.accessToken) {
+                  return navigate("/login");
+                }
+              } catch (e) {
+                alert(e);
+              }
+            } else {
+              alert("Incorrect Password");
+            }
+          })}
+        >
+          <TextInput
+            withAsterisk
+            className="text-white"
+            mt="sm"
+            label="Name"
+            placeholder="Name"
+            {...form.getInputProps("name")}
+          />
+          <TextInput
+            withAsterisk
+            className="text-white"
+            mt="sm"
+            label="Email"
+            placeholder="Email"
+            {...form.getInputProps("email")}
+          />
+          <TextInput
+            mt="sm"
+            className="text-white"
+            withAsterisk
+            label="Address"
+            placeholder="Address"
+            {...form.getInputProps("address")}
+          />
+          <NumberInput
+            mt="sm"
+            className="text-white"
+            withAsterisk
+            label="Phone Number"
+            placeholder="Phone Number"
+            {...form.getInputProps("phoneNumber")}
+          />
+          <PasswordInput
+            mt="sm"
+            className="text-white"
+            withAsterisk
+            label="Password"
+            placeholder="Password"
+            {...form.getInputProps("password")}
+          />
+
+          <PasswordInput
+            mt="sm"
+            className="text-white"
+            withAsterisk
+            label="PasswordConfirmation"
+            placeholder="PasswordConfirmation"
+            {...form.getInputProps("passwordConfirmation")}
+          />
+          <Group position="center" mt="md">
+            {load ? (
+              <Button className="bg-[#068DA9]" type="submit">
+                Submit
+              </Button>
+            ) : (
+              <Button className="bg-[#068DA9]  disabled " type="submit">
+                <Loader color="red" variant="dots" />
+              </Button>
+            )}
+          </Group>
         </form>
-        <GoogleProvider />
-      </Card>
+      </Box>
     </div>
   );
 };

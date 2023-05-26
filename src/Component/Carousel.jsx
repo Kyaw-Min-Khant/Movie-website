@@ -5,25 +5,14 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation, Autoplay } from "swiper";
 import "./carousel.css";
-import LazyLoading from "./LazyLoading";
 import Slide from "./Slide";
+import { useCarouselQuery } from "../Services/myapi";
+import LazyLoading from "./LazyLoading";
 const Carousel = () => {
-  const [movies, setMovies] = useState([]);
-  const [load, setLoad] = useState(true);
-  useEffect(() => {
-    run();
-  }, []);
-  const run = async () => {
-    setLoad(true);
-    const fetchData = await fetch(
-      "https://api.themoviedb.org/3/trending/all/week?api_key=a6af80b02b99c9fae32ba3c9259d4844"
-    );
-    const { results } = await fetchData.json();
-    setMovies(results);
-    setLoad(false);
-  };
-  if (load) {
-    return <LazyLoading />;
+  const { data: apiData,isLoading } = useCarouselQuery();
+  const movies = apiData?.results;
+  if(isLoading){
+    return <LazyLoading/>
   }
   return (
     <div className="">
@@ -42,7 +31,7 @@ const Carousel = () => {
           loop
           className="swiper-container"
         >
-          {movies.map((movie) => (
+          {movies?.map((movie) => (
             <SwiperSlide key={movie.id}>
               <Slide {...movie} />
             </SwiperSlide>

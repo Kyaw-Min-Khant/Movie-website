@@ -20,6 +20,9 @@ export const movieSlice = createSlice({
       Cookies.remove("token");
       Cookies.remove("user");
     },
+    // AddBookmark:(state,{payload})=>{
+    //   state.AddBookmark=
+    // }
   },
 });
 export const { addUser, removeUser } = movieSlice.actions;

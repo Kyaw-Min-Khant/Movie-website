@@ -27,7 +27,7 @@ const MainUI = (props) => {
   return (
     <div className="md:ml-[50px] ml-0 max-w-[1200px]">
       <DetailHero {...props} />
-      <div className="lg:flex md:block justify-start gap-x-5 ">
+      <div className="lg:flex md:block lg:justify-start   lg:gap-x-5  gap-x-0 ">
         <Carousel {...props} />
         <ReviewPart userReview={userReview} />
       </div>

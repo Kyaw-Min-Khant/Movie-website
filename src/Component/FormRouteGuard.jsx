@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Cookies from "js-cookie";
-import Profile from "./Profile";
+import { useNavigate } from "react-router-dom";
+
 const FormRouteGuard = ({ children }) => {
   const token = Cookies.get("token");
-
-  if (token == undefined) {
-    return children;
-  } else {
-    return <Profile />;
-  }
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (token !== undefined) {
+      return navigate("/profile");
+    }
+  }, []);
+  return children;
 };
 export default FormRouteGuard;

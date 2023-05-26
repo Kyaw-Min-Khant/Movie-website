@@ -15,7 +15,9 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config/Firebase-config";
 import { addUser } from "../features.jsx/MoviesSlice";
+import { Loader } from "@mantine/core";
 const LogIn = () => {
+  const [load, setLoad] = useState(true);
   const Toast = Swal.mixin({
     toast: true,
     position: "top-end",
@@ -32,11 +34,10 @@ const LogIn = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const formHandler = async (e) => {
+    setLoad(false);
     try {
       e.preventDefault();
       await signInWithEmailAndPassword(auth, email, password);
-      console.log(auth?.currentUser?.accessToken);
-      console.log(auth?.currentUser);
       if (auth?.currentUser?.accessToken) {
         dispatch(
           addUser({
@@ -58,8 +59,9 @@ const LogIn = () => {
         navigate("/signup");
       }
     } catch (e) {
-      console.log(e);
+      alert(e);
     }
+    setLoad(true);
   };
   return (
     <div>
@@ -95,28 +97,20 @@ const LogIn = () => {
                 label="Password"
               />
             </div>
-            <Checkbox
-              className=""
-              label={
-                <Typography
-                  variant="small"
-                  color="white"
-                  className="flex  items-center font-normal"
-                >
-                  I agree the
-                  <a
-                    href="#"
-                    className="font-medium transition-colors  hover:text-blue-500"
-                  >
-                    &nbsp;Terms and Conditions
-                  </a>
-                </Typography>
-              }
-              containerProps={{ className: "-ml-2.5" }}
-            />
-            <Button type="submit" className="mt-6" fullWidth>
-              Login
-            </Button>
+            {load ? (
+              <Button type="submit" className="mt-6" fullWidth>
+                Login
+              </Button>
+            ) : (
+              <Button className="mt-6 disabled text-center" fullWidth>
+                <Loader
+                  color="red"
+                  className="text-center mx-auto block"
+                  variant="dots"
+                />
+              </Button>
+            )}
+
             <Typography color="white" className="mt-4 text-center font-normal">
               Create an account?
               <NavLink

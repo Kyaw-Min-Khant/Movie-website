@@ -4,7 +4,7 @@ import { TbDatabaseOff } from "react-icons/tb";
 
 const ReviewPart = ({userReview}) => {
   return (
-    <div className="pt-5 lg:pl-6 pl-3 border-l-[1px] border-[#4b4d4a]">
+    <div className="pt-5 lg:pl-2 pl-1 border-l-[1px] border-[#4b4d4a]">
       <h2 className="text-white text-2xl mb-5 font-semibold font-serif">
         Review
       </h2>

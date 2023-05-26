@@ -3,10 +3,16 @@ import LeftSide from "./LeftSide";
 import RightSide from "./RightSide";
 import Menu from "./Menu";
 import LazyLoading from "./LazyLoading";
-const LazyMovieList = React.lazy(() => import("./MovieList"));
-const LazyTv = React.lazy(() => import("./SeriesList"));
+import { usePopularMoviesQuery } from "../Services/myapi";
+const LazyMovie = React.lazy(() => import("./MovieList"));
+const LazySeries = React.lazy(() => import("./SeriesList"));
 const HomePage = () => {
   const [hide, setHide] = useState(true);
+  const { data, isLoading } = usePopularMoviesQuery();
+  if (isLoading) {
+    <LazyLoading />;
+  }
+
   return (
     <div className="bg-[#1C1C1E] relative flex justify-between">
       <LeftSide />
@@ -37,11 +43,11 @@ const HomePage = () => {
         <>
           {hide ? (
             <React.Suspense fallback={<LazyLoading />}>
-              <LazyMovieList />
+              <LazyMovie />
             </React.Suspense>
           ) : (
             <React.Suspense fallback={<LazyLoading />}>
-              <LazyTv />
+              <LazySeries />
             </React.Suspense>
           )}
         </>

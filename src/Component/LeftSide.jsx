@@ -20,7 +20,7 @@ const LeftSide = () => {
           <h3 className="text-xl font-semibold px-3 py-2 text-[#FFEAEA]">
             Menu
           </h3>
-          <div className="">
+          <div className="mb-5">
             <NavLink to="/">
               <h3 className="text-md  font-serif pl-3 py-2 red text-[#FFEAEA]">
                 <AiFillHome className=" inline mr-1" />
@@ -39,19 +39,6 @@ const LeftSide = () => {
                 Search
               </h3>
             </NavLink>
-          </div>
-          <div className="">
-            <h3 className="text-xl font-semibold px-2 py-2 text-[#FFEAEA]">
-              Personal
-            </h3>
-            <h3 className="text-md   font-serif pl-3 py-2 text-[#FFEAEA]">
-              <BsFillBookmarkPlusFill className=" inline mr-1" />
-              Bookmarked
-            </h3>
-            <h3 className="text-md   font-serif pl-3 py-2 text-[#FFEAEA]">
-              <FaHistory className=" inline mr-1" />
-              History
-            </h3>
           </div>
           <div className="">
             <h3 className="text-xl font-semibold px-2 py-2 text-[#FFEAEA]">

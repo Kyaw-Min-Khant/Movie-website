@@ -1,6 +1,12 @@
 import React from "react";
-
-const DetailHero = ({ backdrop_path, poster_path, title, genres,homepage }) => {
+import { AiFillHeart } from "react-icons/ai";
+const DetailHero = ({
+  backdrop_path,
+  poster_path,
+  title,
+  genres,
+  homepage,
+}) => {
   return (
     <div className="relative">
       <img
@@ -10,6 +16,9 @@ const DetailHero = ({ backdrop_path, poster_path, title, genres,homepage }) => {
         }
         alt=""
       />
+      <button className="px-3 absolute top-2 lg:right-5 right-[80%] py-1 rounded">
+        <AiFillHeart className="active:text-xl transition-[0.2s] opacity-[1] text-3xl text-white" />
+      </button>
       <div className=" absolute top-20 left-10">
         <img
           src={

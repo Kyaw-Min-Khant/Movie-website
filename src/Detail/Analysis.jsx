@@ -13,11 +13,11 @@ const Analysis = ({
   status,
 }) => {
   return (
-    <div className="lg:w-[600px] md:w-[500px] w-[300px]">
+    <div className=" lg:w-[600px] md:w-[500px] w-[300px]">
       <h2 className="text-2xl text-[#ffffff]  font-semibold">
         {original_title}
       </h2>
-      <div className=" flex justify-between">
+      <div className=" flex lg:gap-x-20 gap-x-5">
         <div className="">
           <h2 className="tracking-wider pt-2 font-mono text-md   text-[#ffffffb3] ">
             Budget: $ {budget}
