@@ -8,7 +8,9 @@ import { removeUser } from "../features.jsx/MoviesSlice";
 import Swal from "sweetalert2";
 import Menu from "./Menu";
 import { signOut, updateProfile } from "firebase/auth";
-import { auth } from "../config/Firebase-config";
+import { auth, db } from "../config/Firebase-config";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { data } from "autoprefixer";
 
 const Profile = () => {
   const Toast = Swal.mixin({
@@ -24,7 +26,11 @@ const Profile = () => {
   });
   const navigate = useNavigate();
   const user = JSON.parse(Cookies.get("user"));
-
+  const profileData = doc(db, "users", auth?.currentUser?.uid);
+  useEffect(async () => {
+    const data = await getDoc(profileData);
+    console.log(data?.data());
+  }, []);
   const dispatch = useDispatch();
   const formHandler = async (e) => {
     const token = Cookies.get("token");
@@ -39,7 +45,7 @@ const Profile = () => {
         navigate("/");
       }
     } catch (err) {
-    alert(err)
+      alert(err);
     }
   };
 

@@ -10,7 +10,9 @@ const HomePage = () => {
   const [hide, setHide] = useState(true);
   const { data, isLoading } = usePopularMoviesQuery();
   if (isLoading) {
-    <LazyLoading />;
+    <div className=" max-h-screen flex justify-center items-center">
+      <LazyLoading />;
+    </div>;
   }
 
   return (
@@ -40,17 +42,7 @@ const HomePage = () => {
             Series
           </h2>
         </div>
-        <>
-          {hide ? (
-            <React.Suspense fallback={<LazyLoading />}>
-              <LazyMovie />
-            </React.Suspense>
-          ) : (
-            <React.Suspense fallback={<LazyLoading />}>
-              <LazySeries />
-            </React.Suspense>
-          )}
-        </>
+        <>{hide ? <LazyMovie /> : <LazySeries />}</>
       </div>
       <RightSide />
     </div>

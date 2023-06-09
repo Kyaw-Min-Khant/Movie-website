@@ -32,7 +32,7 @@ const Slide = (props) => {
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
         }}
-        className="rounded-lg h-[350px] max-w-[1000px] opacity-[0.15]"
+        className="rounded-lg h-[450px] lg:h-[350px] max-w-[1000px] opacity-[0.15]"
       ></div>
       <div className="hidden lg:block  absolute top-[15%] left-[5%]  opacity-100 ">
         <img
@@ -41,7 +41,7 @@ const Slide = (props) => {
           className="h-[200px] opacity-100 rounded-lg"
         />
       </div>
-      <div className="w-[320px] absolute overflow-scroll  p-3 top-8 right-[5%]  opacity-100">
+      <div className="w-[320px] absolute overflow-scroll  p-3 top-[25%] lg:top-8 right-[5%]  opacity-100">
         <h2 className=" truncate text-2xl text-[#ff1212] font-semibold font-sans">
           {title?.substring(0, 25) || name?.substring(0, 25)}
         </h2>

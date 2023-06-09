@@ -1,6 +1,13 @@
-.swiper-button-prev,.swiper-button-next{
-    color: red;
-};
+.swiper-button-prev,
+.swiper-button-next {
+  color: rgba(123, 12, 12, 0.45);
+}
+.swiper-button-prev:hover {
+  color: rgb(255, 0, 0);
+}
+.swiper-button-next:hover {
+  color: rgb(255, 0, 0);
+}
 
 .swiper-pagination-bullet {
   background-color: white;

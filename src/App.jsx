@@ -34,22 +34,8 @@ const App = () => {
           }
         />
         <Route path="/search" element={<SearchList />} />
-        <Route
-          path="/detail/:id"
-          element={
-            <RouteGuard>
-              <Center />
-            </RouteGuard>
-          }
-        />
-        <Route
-          path="/detailseries/:id"
-          element={
-            <RouteGuard>
-              <SeriesCenter />
-            </RouteGuard>
-          }
-        />
+        <Route path="/detail/:id" element={<Center />} />
+        <Route path="/detailseries/:id" element={<SeriesCenter />} />
         <Route
           path="/signup"
           element={

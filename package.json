@@ -21,8 +21,6 @@
     "firebase": "^9.21.0",
     "firebase-tools": "^11.30.0",
     "js-cookie": "^3.0.5",
-    "lottie-react-web": "^2.2.2",
-    "lottie-web": "^5.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-fast-marquee": "^1.5.2",

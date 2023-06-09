@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 import { auth, db } from "../config/Firebase-config";
 import "./swiper.css";
 import { useNavigate } from "react-router-dom";
-import { addDoc, collection, doc } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import {
   Box,
   Button,
@@ -17,7 +17,6 @@ import {
   TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { async } from "@firebase/util";
 const SignUp = () => {
   const [load, setLoad] = useState(true);
   const form = useForm({
@@ -33,8 +32,6 @@ const SignUp = () => {
       name: (value) =>
         value.length > 2 ? null : "Name must be at least 2 characters",
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-      address: (value) =>
-        value.length > 2 ? null : "Address must be at least 2 characters",
       password: (value) =>
         value.length >= 8 ? null : "Password must be at least 8 characters",
       passwordConfirmation: (value) =>
@@ -54,34 +51,29 @@ const SignUp = () => {
           onSubmit={form.onSubmit(async (values) => {
             if (values.password == values.passwordConfirmation) {
               setLoad(false);
-              window.alert(
-                "First,Copy img url from your browser for your profile picture"
-              );
-              const photo = window.prompt("Enter Your Image Url");
               try {
-                const { user } = await createUserWithEmailAndPassword(
+                await createUserWithEmailAndPassword(
                   auth,
                   values.email,
                   values.password
-                );
-                await updateProfile(user, {
-                  displayName: values?.name,
-                  photoURL: photo,
-                }).then(async () => {
-                  const UserData = collection(db, "users");
-                  const UserAdd = await addDoc(UserData, {
-                    name: values.name,
-                    email: values.email,
-                    password: values.password,
-                    address: values.address,
-                    phoneNumber: values.phoneNumber,
-                  });
+                ).then(async (cred) => {
+                  const userRef = doc(db, "users", cred.user.uid);
+                  try {
+                    await setDoc(userRef, {
+                      name: values.name,
+                      email: values.email,
+                      password: values.password,
+                    });
+                  } catch (e) {
+                    (err) => console.log(err);
+                  }
                 });
                 setLoad(true);
                 if (auth?.currentUser?.accessToken) {
                   return navigate("/login");
                 }
               } catch (e) {
+                setLoad(true);
                 alert(e);
               }
             } else {
@@ -105,22 +97,6 @@ const SignUp = () => {
             placeholder="Email"
             {...form.getInputProps("email")}
           />
-          <TextInput
-            mt="sm"
-            className="text-white"
-            withAsterisk
-            label="Address"
-            placeholder="Address"
-            {...form.getInputProps("address")}
-          />
-          <NumberInput
-            mt="sm"
-            className="text-white"
-            withAsterisk
-            label="Phone Number"
-            placeholder="Phone Number"
-            {...form.getInputProps("phoneNumber")}
-          />
           <PasswordInput
             mt="sm"
             className="text-white"
@@ -129,7 +105,6 @@ const SignUp = () => {
             placeholder="Password"
             {...form.getInputProps("password")}
           />
-
           <PasswordInput
             mt="sm"
             className="text-white"

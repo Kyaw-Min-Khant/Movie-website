@@ -5,19 +5,20 @@ import RobotAnimate from "./Robot";
 const TableData = () => {
   const [users, setUsers] = useState([]);
   const usersCollectionRef = collection(db, "users");
+
+  const getUsers = async () => {
+    try {
+      const data = await getDocs(usersCollectionRef);
+      const filterData = data?.docs?.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setUsers(filterData);
+    } catch (e) {
+      alert(e);
+    }
+  };
   useEffect(() => {
-    const getUsers = async () => {
-      try {
-        const data = await getDocs(usersCollectionRef);
-        const filterData = data?.docs?.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
-        setUsers(filterData);
-      } catch (e) {
-        alert(e);
-      }
-    };
     getUsers();
   }, []);
   const ths = (
