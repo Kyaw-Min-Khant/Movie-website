@@ -11,8 +11,8 @@ export const movieSlice = createSlice({
     addUser: (state, { payload }) => {
       state.user = payload.user;
       state.token = payload.token;
-      Cookies.set("user", JSON.stringify(state.user), 7);
-      Cookies.set("token", state.token, 7);
+      Cookies.set("user", JSON.stringify(state.user), { expires: 30 });
+      Cookies.set("token", state.token, { expires: 30 });
     },
     removeUser: (state, { payload }) => {
       state.user = null;
@@ -20,9 +20,6 @@ export const movieSlice = createSlice({
       Cookies.remove("token");
       Cookies.remove("user");
     },
-    // AddBookmark:(state,{payload})=>{
-    //   state.AddBookmark=
-    // }
   },
 });
 export const { addUser, removeUser } = movieSlice.actions;
