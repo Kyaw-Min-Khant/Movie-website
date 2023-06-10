@@ -54,7 +54,7 @@ const Searchmovies = () => {
         />
         <ReponsiveDropDown setSelect={setSelect} />
       </div>
-      {multi.length < 3 ? <></> : <SeriesNextPage setAdd={setAdd} add={add} />}
+      {multi.length < 5 ? <></> : <SeriesNextPage setAdd={setAdd} add={add} />}
     </div>
   );
 };

@@ -13,6 +13,8 @@ import AdminData from "./Admin/Admin data";
 const LazyExploreList = React.lazy(() => import("./Explore/ExploreList"));
 const LazyHome = React.lazy(() => import("./Component/HomePage"));
 
+
+
 const App = () => {
   return (
     <div className="">

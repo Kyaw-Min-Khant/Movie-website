@@ -32,7 +32,7 @@ const Slide = (props) => {
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
         }}
-        className="rounded-lg h-[450px] lg:h-[350px] max-w-[1000px] opacity-[0.15]"
+        className="rounded-lg h-[450px] lg:h-[350px] max-w-[1000px] opacity-[0.35] lg:opacity-[0.15]"
       ></div>
       <div className="hidden lg:block  absolute top-[15%] left-[5%]  opacity-100 ">
         <img

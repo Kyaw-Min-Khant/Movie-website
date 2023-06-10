@@ -18,16 +18,18 @@ const TableData = () => {
       alert(e);
     }
   };
-  useEffect(() => {
-    getUsers();
-  }, []);
+  getUsers();
   const ths = (
     <tr className="">
       <th className="text-white px-[30px] py-3">No</th>
       <th className="text-white w-[300px] py-3">Name</th>
       <th className="text-white w-[300px] py-3">Email</th>
-      <th className="text-white w-[300px] py-3">PhoneNumber</th>
-      <th className="text-white w-[300px] py-3">Address</th>
+      <th className="text-white w-[300px] py-3">
+        <span className="hidden md:inline text-white">PhoneNumber</span>
+      </th>
+      <th className="text-white w-[300px] py-3">
+        <span className="hidden md:inline text-white">PhoneNumber</span>
+      </th>
     </tr>
   );
   const rows = users.map((element, index) => (
@@ -37,10 +39,14 @@ const TableData = () => {
         {element.name}
       </td>
       <td className="border-y-[1px] border-white py-3">{element.email}</td>
-      <td className="border-y-[1px] border-white py-3">
-        {element.phoneNumber}
+      <td className="border-y-[1px]  border-white py-3">
+        <span className="hidden md:inline text-white">
+          {element.phoneNumber}
+        </span>
       </td>
-      <td className="border-y-[1px] border-white py-3">{element.address}</td>
+      <td className="border-y-[1px]  border-white py-3">
+        <span className="hidden md:inline text-white">{element.address}</span>
+      </td>
     </tr>
   ));
   if (users.length > 1) {

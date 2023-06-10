@@ -16,7 +16,7 @@ const SearchMainPage = ({ run, setSearch, movies, search, multi }) => {
         />
       </form>
       <div className="flex justify-around md:gap-5 sm:gap-2  flex-wrap align-middle">
-        {multi.length < 3 ? (
+        {multi.length < 5 ? (
           <div className="mx-auto">
             <img
               className=" items-center mt-8 h-[300px]"

@@ -42,7 +42,17 @@ const HomePage = () => {
             Series
           </h2>
         </div>
-        <>{hide ? <LazyMovie /> : <LazySeries />}</>
+        <>
+          {hide ? (
+            <React.Suspense fallback={<LazyLoading />}>
+              <LazyMovie />
+            </React.Suspense>
+          ) : (
+            <React.Suspense fallback={<LazyLoading />}>
+              <LazySeries />
+            </React.Suspense>
+          )}
+        </>
       </div>
       <RightSide />
     </div>

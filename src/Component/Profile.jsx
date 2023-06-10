@@ -3,14 +3,13 @@ import { Avatar } from "@mantine/core";
 import Cookies from "js-cookie";
 import Left from "../Explore/Left";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { removeUser } from "../features.jsx/MoviesSlice";
 import Swal from "sweetalert2";
 import Menu from "./Menu";
 import { signOut, updateProfile } from "firebase/auth";
 import { auth, db } from "../config/Firebase-config";
 import { doc, getDoc, onSnapshot } from "firebase/firestore";
-import { data } from "autoprefixer";
 
 const Profile = () => {
   const Toast = Swal.mixin({
@@ -36,13 +35,13 @@ const Profile = () => {
     const token = Cookies.get("token");
     e.preventDefault();
     try {
+      dispatch(removeUser());
       await signOut(auth);
       if (auth?.currentUser?.email == null) {
+        navigate("/");
         Toast.fire({
           title: "Logout successfully",
         });
-        dispatch(removeUser());
-        navigate("/");
       }
     } catch (err) {
       alert(err);

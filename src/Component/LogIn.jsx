@@ -45,7 +45,7 @@ const LogIn = () => {
             token: auth?.currentUser?.accessToken,
           })
         );
-        navigate("/");
+        navigate("/profile");
         Toast.fire({
           title: "Signed in successfully",
         });
