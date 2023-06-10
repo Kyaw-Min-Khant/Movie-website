@@ -12,7 +12,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <Provider store={store}>
       <ThemeProvider>
-        <App className="bg-[##1C1C1E]" />
+        <App className="bg-[#1C1C1E]" />
       </ThemeProvider>
     </Provider>
   </BrowserRouter>
